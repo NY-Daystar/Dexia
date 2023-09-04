@@ -21,12 +21,10 @@ def main():
     set_log_level(config)
     log.debug("Project : %s - Version : %s", CONSTANTS.project, CONSTANTS.version)
 
-    # TODO gerer la partie scrap et la partie api 
-    # TODO finir le docker file
-
-     # Process Download GSheet file only if config accept to download
+     # Process Web scraping, only if config accept to scrap
     log.info('Web Scraper: %s', 'active' if config.scraper else 'disable')
 
+    # Launch Scraper if activated
     if config.scraper:
         Process(target=scraper.start,
                 args=(config.url,))\
@@ -34,9 +32,8 @@ def main():
         
     # Launch API
     Process(target=api.start,
-            args=(config,))\
+            args=(config, ))\
         .start()
-
 
 def setup_logger():
     '''Setup logging format'''

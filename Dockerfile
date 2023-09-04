@@ -12,7 +12,7 @@ COPY requirements.txt ./
 RUN pip3 install -r requirements.txt \
     && rm -rf .cache/pip
 
-# Copy python code
+# python code
 COPY . ./
 
 # Expose for api

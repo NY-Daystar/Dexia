@@ -187,7 +187,6 @@ docker-compose build && docker-compose down && docker-compose up -d
 
 ### App API
 
-TODO
 Create file `config.json`
 
 ```json

@@ -1,0 +1,9 @@
+{
+	"debug": true,
+	"scraper": true,
+	"url": "https://f1i.autojournal.fr/calendrier-f1-2023-dates-horaires-grands-prix",
+	"api": {
+		"host": "127.0.0.1",
+		"port": 8080
+	}
+}

@@ -38,7 +38,9 @@ def start(config: Config):
     # Define all routes
     routes.setup(app, config)
 
+    log.warn("Swagger API : http://%s:%s%s", config.api.host, config.api.port, app.docs_url)
+
     log_config = uvicorn.config.LOGGING_CONFIG
     log_config['formatters']['access']['fmt'] = '%(asctime)s - %(levelname)s - %(message)s'
-    uvicorn.run(app, host=config.api.host, port=int(
-        config.api.port), log_config=log_config)
+    uvicorn.run(app, host=config.api.host, port=int(config.api.port), log_config=log_config)
+    

@@ -3,7 +3,7 @@ services:
     api:
         build: .
         container_name: dexia
-        network_mode: host
+        network_mode: "host"
         logging:
             driver: "json-file"
             options:
@@ -11,4 +11,3 @@ services:
                 max-file: "3"
         volumes:
             - "$PWD/config.json:/home/app/config.json:ro"
-            - "$PWD/content:/home/app/content"
