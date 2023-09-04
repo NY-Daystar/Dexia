@@ -1,2 +1,2 @@
-from .config import Config, load
+from .config import Config
 from .api import ApiConfig

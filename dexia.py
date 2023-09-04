@@ -7,8 +7,7 @@ import api
 import config.constant as CONSTANTS
 import helper
 import scraper
-
-from config import Config, load
+from config import Config
 
 log = logging.getLogger("dexia")
 
@@ -18,7 +17,7 @@ def main():
     entrypoint
     '''
     setup_logger()
-    config: Config = load('config.json')
+    config: Config = Config.load('config.json')
     set_log_level(config)
     log.debug("Project : %s - Version : %s", CONSTANTS.project, CONSTANTS.version)
 
