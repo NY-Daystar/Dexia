@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+    api:
+        build: .
+        container_name: dexia
+        network_mode: host
+        logging:
+            driver: "json-file"
+            options:
+                max-size: 100m
+                max-file: "3"
+        volumes:
+            - "$PWD/config.json:/home/app/config.json:ro"
+            - "$PWD/content:/home/app/content"

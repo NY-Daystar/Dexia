@@ -1,10 +1,21 @@
 from urllib.error import HTTPError
+
 import requests
-from bs4 import BeautifulSoup, Tag, ResultSet
+from bs4 import BeautifulSoup, ResultSet, Tag
 
 from helper.exc import BeautifulSoupException
-
 from models import Calendar, GrandPrix
+
+
+def start(url: str) -> None:
+    calendar: Calendar = scrap_calendar(url)
+
+    # TODO pour chacun des grand prix recuperer le detail
+    # FP1, FP2, FP3, QUALIF et COURSE
+
+    # For each grand prix get all data
+    for gp in calendar.grand_prix:
+        print(gp)
 
 
 def scrap_calendar(url: str) -> Calendar:

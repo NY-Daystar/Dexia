@@ -1,11 +1,14 @@
 import logging
 import os
 import sys
+from multiprocessing import Process
 
+import api
 import config.constant as CONSTANTS
 import helper
 import scraper
-from models import Calendar, GrandPrix
+
+from config import Config, load
 
 log = logging.getLogger("dexia")
 
@@ -15,19 +18,25 @@ def main():
     entrypoint
     '''
     setup_logger()
-    set_log_level()
+    config: Config = load('config.json')
+    set_log_level(config)
     log.debug("Project : %s - Version : %s", CONSTANTS.project, CONSTANTS.version)
 
-    # Get calendar
-    calendar: Calendar = scraper.scrap_calendar(
-        url="https://f1i.autojournal.fr/calendrier-f1-2023-dates-horaires-grands-prix")
+    # TODO gerer la partie scrap et la partie api 
+    # TODO finir le docker file
 
-    # TODO pour chacun des grand prix recuperer le detail
-    # FP1, FP2, FP3, QUALIF et COURSE
+     # Process Download GSheet file only if config accept to download
+    log.info('Web Scraper: %s', 'active' if config.scraper else 'disable')
 
-    # For each grand prix get all data
-    for gp in calendar.grand_prix:
-        print(gp)
+    if config.scraper:
+        Process(target=scraper.start,
+                args=(config.url,))\
+            .start()
+        
+    # Launch API
+    Process(target=api.start,
+            args=(config,))\
+        .start()
 
 
 def setup_logger():
@@ -50,9 +59,9 @@ def setup_logger():
     log.addHandler(stdout_handler)
 
 
-def set_log_level():
+def set_log_level(config: Config):
     '''Set level log'''
-    level: int = logging.DEBUG if helper.is_arg_debug() else logging.INFO
+    level: int = logging.DEBUG if config.debug else logging.INFO
     log.setLevel(level)
     log.debug('Set debug mode')
 
