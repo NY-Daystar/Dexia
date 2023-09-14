@@ -1,10 +1,10 @@
 '''Card routes'''
-import logging
-
 from fastapi import FastAPI
+
+from helper import get_mp_logger
 from scraper.uploader import get_version
 
-log = logging.getLogger('dexia')
+log = get_mp_logger()
 
 
 def setup(app: FastAPI):

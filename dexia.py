@@ -1,72 +1,41 @@
-import logging
-import os
-import sys
+"""Main module"""
 from multiprocessing import Process
 
 import api
-import config.constant as CONSTANTS
-import helper
 import scraper
 from config import Config
+from helper import get_mp_logger
 
-log = logging.getLogger("dexia")
+log = get_mp_logger()
+
+__project__: str = 'Dexia'
+__version__: str = 'v1.0.0'
 
 
 def main():
-    '''
-    entrypoint
-    '''
-    setup_logger()
+    """
+    Entrypoint of the program 
+    - Load configuration file (config.json)
+    - Setup Logger
+    - Launch multiprocessing (scraper + api)
+    """
+    log.debug("Project : %s - Version : %s", __project__, __version__)
+    
     config: Config = Config.load('config.json')
-    set_log_level(config)
-    log.debug("Project : %s - Version : %s", CONSTANTS.project, CONSTANTS.version)
-
-     # Process Web scraping, only if config accept to scrap
+    print(config)
+    # Process Web scraping, only if config accept to scrap
     log.info('Web Scraper: %s', 'active' if config.scraper else 'disable')
 
     # Launch Scraper if activated
     if config.scraper:
         Process(target=scraper.start,
-                args=(config.url,))\
+                args=(config,))\
             .start()
-        
+
     # Launch API
     Process(target=api.start,
             args=(config, ))\
         .start()
-
-def setup_logger():
-    '''Setup logging format'''
-    log_formatter = '[%(asctime)s] | %(levelname)s : %(message)s'
-    date_format = '%Y-%m-%dT%H:%M:%SZ'
-    formatter = logging.Formatter(log_formatter, date_format)
-
-    stdout_handler = logging.StreamHandler(sys.stdout)
-    stdout_handler.setFormatter(formatter)
-
-    log_file: str = f"Logs/{helper.get_date()}.log"
-    create_logs_folder(log_file)
-
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(formatter)
-
-    log.addHandler(file_handler)
-    log.addHandler(stdout_handler)
-
-
-def set_log_level(config: Config):
-    '''Set level log'''
-    level: int = logging.DEBUG if config.debug else logging.INFO
-    log.setLevel(level)
-    log.debug('Set debug mode')
-
-
-def create_logs_folder(filepath: str) -> None:
-    '''Create logs folder if not exists'''
-    dirname = os.path.dirname(filepath)
-    if not os.path.exists(dirname):
-        os.mkdir(dirname)
 
 
 if __name__ == '__main__':

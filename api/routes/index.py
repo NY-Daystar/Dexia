@@ -1,12 +1,12 @@
 '''All API route'''
-import logging
-
 from fastapi import FastAPI
 
 #from api.routes import admin, card, cards
 from api.routes import admin
 from config import Config
-log = logging.getLogger('dexia')
+from helper import get_mp_logger
+
+log = get_mp_logger()
 
 
 def setup(app: FastAPI, config: Config):

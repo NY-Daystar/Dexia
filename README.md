@@ -14,7 +14,7 @@
 
 # Dexia
 
-Python scrapper and api to fetch data about Formula 1 Calendar
+Python scraper and api to fetch data about Formula 1 Calendar
 
 **Version: 1.0.0**
 
@@ -26,7 +26,7 @@ Python scrapper and api to fetch data about Formula 1 Calendar
 -   [OpenAPI](#openapi)
 -   [How it works](#how-it-works)
 -   [Get access to GSheet file](#generate-file-id)
--   [Debug GSheet corrupted or unreachable](#debug-gsheet-corrupted-or-unreachable)
+-   [Debug Uploader corrupted or unreachable](#debug-uploader-corrupted-or-unreachable)
 -   [Unit tests](#tests)
 -   [Docker setup Dexia](#docker-setup-dexia)
     -   [Dexia API](#app-api)
@@ -105,25 +105,19 @@ $  python .
 
 OpenAPI is format by `swagger`.  
 To access to OpenAPI Swagger:  
-TODO
-Go to the `localhost:8080/swagger` or `127.0.0.1:8080/documentation` endpoint to get swagger access.
+Go to the `localhost:8080/swagger` endpoint to get swagger access.
 
 ## How it works
 
 The application scrap french website who gets data about formula 1 calendar
-Store them into csv
-TODO a garder ou pas
+Serialize them in json files (default path: `./contents`)
+Then api use this json file to generate REST collections (`Calendar`, `Grand Prix`, `Events`, ...)
 
-```
- in csv format the GSheet content and store it into the `content` folder.
-Then api use the csv to generate GPUs objects and render the appropriate data
-```
+## Debug Uploader corrupted or unreachable
 
-An api provides these data for any website
+TODO mettre le contexte que l'uploader est utiliser pour charger les donnees du json en le deserialisant
+TODO ici on a la procédure pour le debugger
 
-## Debug GSheet corrupted or unreachable
-
-TODO
 This project download periodically a GSheet and stores it into `content` folder into `gpus.csv` file.
 
 If you want to restore an old old file
@@ -138,10 +132,10 @@ If you want to restore an old old file
 }
 ```
 
-2. Restart api docker service
+2. Restart service
 
 ```bash
-$ ./stop.sh && ./run.sh && ./logs.sh
+$ python .
 ```
 
 3. Restore old gpus.csv file in docker volume
@@ -154,7 +148,7 @@ $ cp gpus_<VERSION>.csv gpus.csv
 
 ## Tests
 
-TODO
+TODO ecrire des tests unitaires
 To execute all unit tests
 
 ```bash

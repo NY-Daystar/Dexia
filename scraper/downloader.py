@@ -1,34 +1,35 @@
 #!/usr/bin/env python3
 
-'''Module to fetch Google Sheet about GPU content'''
-import hashlib
-import logging
+'''Module to Scrap data about Formula 1'''
+import json
+import os
 import shutil
 import sys
-from pathlib import Path
-from typing import Tuple
 from datetime import datetime
+from pathlib import Path
 
-import requests
 import schedule
 
-from config import FileConfig, constants
+from config import Config
+from helper import get_mp_logger, is_new_file, path_combine
+from models import Calendar
 
-log = logging.getLogger('dexia')
+from .entity import CalendarEntity
 
-### TODO faire le scrapper
+log = get_mp_logger()
 
-def start(config: FileConfig):
-    '''Launch run downloader to get GSheet GPU data'''
+FILE = 'calendar.json'
 
-    src_file: str = config.source
-    dest_file: Path = Path(config.destination)
-
-    # Download the GSheet one time to get it instantly
-    update(src_file, dest_file)
+def start(config: Config):
+    '''Launch downloader to scrap data'''
 
     log.info('Cron downloader setup at every minutes')
-    schedule.every(1).minutes.at(':00').do(update, src_file, dest_file)
+
+    # Scrap web data one time to get it instantly
+    scrap(config)
+
+    log.info('Cron downloader setup at every hour')
+    schedule.every(1).hours.at(':00').do(scrap, config)
 
     while 1:
         try:
@@ -37,90 +38,67 @@ def start(config: FileConfig):
             sys.exit(0)
 
 
-def update(file_id: str, destination: Path = '.', tab: int = 0):
+
+def scrap(config: Config) -> Calendar:
     '''
     Download source GSheet file in csv into destination file
     tab parameter indicate which tab you want to download first is 0
     '''
+    calendar: Calendar = CalendarEntity().scrap(config.url)
 
-    # Setup folder content/ if not created
-    Path(destination.parent).mkdir(parents=True, exist_ok=True)
-
-    content, err = download(file_id, tab)
-    if err is not None:
-        log.error(f'Can\'t update the csv file {err}')
+    if calendar is None:
+        log.warn('No calendar was found\nSkip the end process')
         return
+    
+    year: int = CalendarEntity().scrap_year(config.url)
+    log.info("Year scrapped : %s", year)
+    calendar.set_year(year)
 
-    log.debug("Comparing current file with content downloaded")
-    if not is_new_file(destination, content):
-        log.info("No new content found from GSheet, skip.")
-        return
-    log.info("New content found from GSheet")
+    # Display in log
+    log.info(calendar)
+    [log.debug(gp) for gp in calendar.grand_prix]
+    
+    file: Path = path_combine(config.folder, FILE)
+    is_saved: bool = save_data(calendar, config.folder, file)
 
-    log.info("Save into backup file old content")
-    file_backup: str = save_file(destination)
-    log.info(f"Backup saved: {file_backup}")
+    log.info("data %s into file: %s", 'saved' if is_saved==True else 'not saved', file) 
 
-    # Write CSV
-    log.info(f'Writing content into {destination}')
-    with open(destination, 'w', encoding="utf-8") as document:
-        document.write(content)
-    log.info(f'File {destination} written')
+def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
+    """'Copy calendar content into files
 
+    Args:
+        calendar (Calendar): calendar to saved in json file
+        folder (Path): folder to save json backup files
+        file (Path): file to save data
 
-def download(file_id: str, tab: int = 0) -> Tuple[bool, Exception]:
-    '''Download source GSheet file on tab and return its content'''
-    source: str = f'https://docs.google.com/spreadsheets/d/e/{file_id}'\
-        f'/pub?gid={tab}&single=true&output=csv'
-    log.debug(f'Downloading file: {source}')
+    Returns:
+        bool: True if saved, otherwise False
+    """ 
+    if calendar is None:
+        log.warn('Calendar cannot be saved is None')
+        return False
+    
+    if not os.path.exists(folder):
+        os.mkdir(folder)
 
-    # Download from google
-    response = requests.get(source)
+    # Write in backup file 
+    dtime: str = datetime.now().strftime('%Y_%m_%d-%H_%M_%S')
+    backup_file: Path = path_combine(folder, f'data_{dtime}.json')
+    log.debug('Creating backup file: %s', backup_file)
+    with open( backup_file , "w", encoding='utf-8' ) as file_descriptor:
+        json.dump(calendar.to_dict(), file_descriptor, ensure_ascii=False, indent=4)
 
-    if response.status_code != 200 or response.content == b'':
-        log.error(
-            f'Can\'t download GSheet file status: {response.status_code}, '
-            'reason: {response.reason}'
-        )
-        return None, Exception(f"Error code: {response.status_code}, reason: {response.reason}")
-
-    content: str = response.content.decode("utf-8")
-    log.debug(f'File {source} downloaded')
-    return content, None
-
-
-def is_new_file(current_file: Path, new_file_content: str) -> bool:
-    '''Compare MD5 checksum of current file and new content downloaded from Google'''
-    return file_checksum(current_file, "file") != file_checksum(new_file_content, "str")
-
-
-def file_checksum(source: str, content_type: str = "file") -> str:
-    '''Return md5 checksum of a file or a string'''
-    md5_hash = hashlib.md5()
-
-    if content_type == "str":
-        return hashlib.md5(source.encode('utf-8')).hexdigest()
-    elif content_type == "file":
-        try:
-            with open(source, "rb") as document:
-                content: bytes = document.read()
-                md5_hash.update(content)
-
-                digest: str = md5_hash.hexdigest()
-                return digest
-        except FileNotFoundError:
-            return "0"
-    else:
-        return None
-
-
-def save_file(file: Path) -> str:
-    '''Copy old file on another filename'''
+    # Write file if not exist or new changes
     if not file.exists():
-        return
-    dtime: datetime = datetime.now()
-    time_formatted: str = dtime.strftime('%Y-%m-%d_%H:%M:%S')
-    filename: str = f"gpus_{time_formatted}.csv"
-    backup_file: Path = Path(f'{constants.DEST_FOLDER}/{filename}')
-    shutil.copy(file, backup_file)
-    return filename
+        log.debug('file %s doesn\'t exist copying backup file %s', file, backup_file)
+        shutil.copy(backup_file, file)
+
+    # Detect changes
+    if is_new_file(file, backup_file):
+        log.info("New content in backup file (%s), copying into (%s)", backup_file, file )
+        shutil.copy(backup_file, file)
+    else:
+        log.warn("Content not changed, No copy of backup file (%s) into file (%s)", backup_file, file)
+    
+    return True
+
