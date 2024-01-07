@@ -10,4 +10,3 @@ def path_combine(*args)-> Path:
         Path: path combined
     """
     return Path(join(*args)) 
-

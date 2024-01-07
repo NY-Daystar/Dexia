@@ -22,7 +22,7 @@ def get_last_document(config: Config) -> str:
 def upload(config: Config) -> Calendar:
     '''Upload Calendar from local file to create data for api'''
     calendar: Calendar = Calendar()
-    
+
     source = get_last_document(config)
 
     with open(source, 'r', encoding='utf-8') as document:
@@ -33,7 +33,7 @@ def upload(config: Config) -> Calendar:
             for gp in data['grand_prix']:
                 grandPrix : GrandPrix = GrandPrix(gp['index'], gp['name'], gp['date'])
                 calendar.add_grand_prix(grandPrix)
-        except Exception as e:
+        except IndexError as e:
             log.error(e)
             return None
 

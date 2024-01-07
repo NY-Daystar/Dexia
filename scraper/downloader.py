@@ -46,9 +46,9 @@ def scrap(config: Config) -> Calendar:
     calendar: Calendar = CalendarEntity().scrap(config.url)
 
     if calendar is None:
-        log.warn('No calendar was found\nSkip the end process')
+        log.warning('No calendar was found\nSkip the end process')
         return
-    
+
     year: int = CalendarEntity().scrap_year(config.url)
     log.info("Year scrapped : %s", year)
     calendar.set_year(year)
@@ -57,11 +57,11 @@ def scrap(config: Config) -> Calendar:
     # Display in log
     log.info(calendar)
     [log.debug(gp) for gp in calendar.grand_prix]
-    
+
     file: Path = path_combine(config.folder, constants.FILE)
     is_saved: bool = save_data(calendar, config.folder, file)
 
-    log.info("data %s into file: %s", 'saved' if is_saved==True else 'not saved', file) 
+    log.info("data %s into file: %s", 'saved' if is_saved is True else 'not saved', file) 
 
 def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
     """'Copy calendar content into files
@@ -75,9 +75,9 @@ def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
         bool: True if saved, otherwise False
     """ 
     if calendar is None:
-        log.warn('Calendar cannot be saved is None')
+        log.warning('Calendar cannot be saved is None')
         return False
-    
+
     if not os.path.exists(folder):
         os.mkdir(folder)
 
@@ -98,7 +98,6 @@ def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
         log.info("New content in backup file (%s), copying into (%s)", backup_file, file )
         shutil.copy(backup_file, file)
     else:
-        log.warn("Content not changed, No copy of backup file (%s) into file (%s)", backup_file, file)
-    
-    return True
+        log.warning("Content not changed, No copy of backup file (%s) into file (%s)", backup_file, file)
 
+    return True

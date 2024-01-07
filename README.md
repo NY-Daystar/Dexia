@@ -14,7 +14,8 @@
 
 # Dexia
 
-Python scraper and api to fetch data about Formula 1 Calendar
+Python scraper and api to fetch data about Formula 1 Calendar  
+Source code analysed with [DeepSource](https://deepsource.com/)
 
 **Version: 1.0.0**
 

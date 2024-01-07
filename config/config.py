@@ -29,9 +29,9 @@ class Config:
             config.scraper = json_data.get('scraper', True)
             config.folder = json_data.get('folder', 'folder')
             config.url = json_data.get('url', None)
-            config.api = ApiConfig().load(json_data.get('api', dict()))
+            config.api = ApiConfig().load(json_data.get('api', {}))
         return config
-    
+
     def __str__(self):
         return f'Config: debug: {self.debug} - scraper: {self.scraper} '\
             f'- folder: {self.folder} - url: {self.url} - Api: {self.api.host}:{self.api.port}'

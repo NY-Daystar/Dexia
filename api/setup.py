@@ -33,7 +33,7 @@ def start(config: Config):
     admin.setup(app, config)
     grandPrix.setup(app, config)
 
-    log.warn("Swagger API : http://%s:%s%s", config.api.host, config.api.port, app.docs_url)
+    log.warning("Swagger API : http://%s:%s%s", config.api.host, config.api.port, app.docs_url)
 
     log_config = uvicorn.config.LOGGING_CONFIG
     log_config['formatters']['access']['fmt'] = '%(asctime)s - %(levelname)s - %(message)s'

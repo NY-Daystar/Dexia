@@ -75,7 +75,7 @@ class CalendarEntity(Entity):
             index: str = elements[0].get_text()
             name: str = elements[1].get_text()
             date: str = elements[2].get_text()
-            
+
             log.debug('index: %s - name: %s - date: %s', index, name, date)
             grand_prix: GrandPrix = GrandPrix(index, name, date)
             calendar.add_grand_prix(grand_prix)

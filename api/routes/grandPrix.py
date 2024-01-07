@@ -32,7 +32,7 @@ def setup(app: FastAPI, config: Config):
     def _(id: int):
         calendar: Calendar = upload(config)
         grandPrix: str = calendar.get_grand_prix(id)
-    
+
         if(grandPrix is None):
             raise HTTPException(
                 status_code=404, 
@@ -41,8 +41,8 @@ def setup(app: FastAPI, config: Config):
                     'data': f'Grand prix with index \'{id}\' not found'
                 })
             )
-        else: 
-            return dict({
-                'status': 'OK',
-                'data': grandPrix
-            })
+        
+        return dict({
+            'status': 'OK',
+            'data': grandPrix
+        })

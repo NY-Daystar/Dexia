@@ -20,4 +20,3 @@ class Event:
 
     def __str__(self) -> str:
        return f'Type: {self.type.name} - Date - {self.date.strftime("%Y-%m-%dT%H:%M:%S")}'
-        

@@ -20,7 +20,7 @@ def main():
     - Launch multiprocessing (scraper + api)
     """
     log.debug("Project : %s - Version : %s", __project__, __version__)
-    
+
     config: Config = Config.load('config.json')
 
     # Process Web scraping, only if config accept to scrap

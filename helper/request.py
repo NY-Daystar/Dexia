@@ -29,5 +29,5 @@ def request(url: str) -> Response:
 
     if not response.ok:
         raise HTTPError(url, response.status_code, response.content, response.headers, response.content)
-    
+
     return response

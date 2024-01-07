@@ -24,7 +24,7 @@ def get_mp_logger(file_path: Path = Path(PATH), level: int = DEBUG )-> Logger:
     logger = get_logger()
     logger.setLevel(level)
     formatter = Formatter('%(asctime)-2s - %(levelname)-8s - [%(filename)s:l-%(lineno)d] - %(message)s')
-    
+
     # Handle logs folder
     create_logs_folder(file_path)
 
@@ -36,10 +36,10 @@ def get_mp_logger(file_path: Path = Path(PATH), level: int = DEBUG )-> Logger:
     stdout_handler = StreamHandler()
     stdout_handler.setFormatter(formatter)
 
-    if not len(logger.handlers): 
+    if not logger.handlers: 
         logger.addHandler(file_handler)
         logger.addHandler(stdout_handler)
-        
+ 
     return logger
 
 

@@ -4,5 +4,5 @@ class Race(Event):
     '''
     Race event
     '''
-    def __init__(self, name, type, start_time, end_time):
-        super().__init__(name, type, start_time=start_time, end_time=end_time)
+    def __init__(self, name, event_type, start_time):
+        super().__init__(name, event_type, date=start_time)

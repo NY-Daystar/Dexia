@@ -34,12 +34,12 @@ class GrandPrix():
         match: re.Match[str] = regexp.match(raw_date)
 
         # si la date est déjà conforme
-        if(re.match(r"^\d{4}-\d{2}-\d{2}$", raw_date) != None):
+        if(re.match(r"^\d{4}-\d{2}-\d{2}$", raw_date) is not None):
             return datetime.strptime(raw_date, "%Y-%m-%d")
-        
+
         day: int = int(match.group(1))
         month: int = int(Month[match.group(3).upper()])
-        
+
         return datetime(day=day, month=month, year=9999)
 
     def add_event(self, event: Event) -> None:

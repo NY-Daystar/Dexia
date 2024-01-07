@@ -29,7 +29,7 @@ def file_checksum(source: str, content_type: str = "file") -> str:
 
     if content_type == "str":
         return md5(source.encode('utf-8')).hexdigest()
-    elif content_type == "file":
+    else: # content type: file
         md5_hash = md5() 
         try:
             with open(source, "rb") as document:
@@ -40,5 +40,3 @@ def file_checksum(source: str, content_type: str = "file") -> str:
                 return digest
         except FileNotFoundError:
             return "0"
-    else:
-        return None
