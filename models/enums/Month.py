@@ -16,4 +16,4 @@ class Month(IntEnum):
     SEPTEMBRE = 9
     OCTOBRE = 10
     NOVEMBRE = 11
-    DECEMBRE = 12
+    DÉCEMBRE = 12

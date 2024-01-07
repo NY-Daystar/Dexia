@@ -1,4 +1,3 @@
-
 class BeautifulSoupException(Exception):
     '''Exception when scrap doesn't find tag'''
 

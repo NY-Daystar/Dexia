@@ -1,8 +1,9 @@
 from . import Event
 
-class Race(Event):
+
+class FreePractice(Event):
     '''
-    Race event
+    FreePractice Event
     '''
     def __init__(self, name, type, start_time, end_time):
         super().__init__(name, type, start_time=start_time, end_time=end_time)

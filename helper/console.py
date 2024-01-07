@@ -1,10 +1,11 @@
 '''Utilities module'''
 
 import getopt
-import logging
 import sys
 
-log = logging.getLogger('dexia')
+from .logger import get_mp_logger
+
+log = get_mp_logger()
 
 SHORT_OPTIONS = 'dc'
 LONG_OPTIONS = ['debug']
