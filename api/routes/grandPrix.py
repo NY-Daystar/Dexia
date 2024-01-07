@@ -41,7 +41,7 @@ def setup(app: FastAPI, config: Config):
                     'data': f'Grand prix with index \'{id}\' not found'
                 })
             )
-        
+
         return dict({
             'status': 'OK',
             'data': grandPrix

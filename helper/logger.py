@@ -39,7 +39,7 @@ def get_mp_logger(file_path: Path = Path(PATH), level: int = DEBUG )-> Logger:
     if not logger.handlers: 
         logger.addHandler(file_handler)
         logger.addHandler(stdout_handler)
- 
+
     return logger
 
 

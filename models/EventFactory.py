@@ -15,18 +15,17 @@ class EventFactory:
     name: str
     type: EventType
     start_date: datetime
-    end_date: datetime
 
     @classmethod
-    def create(cls, name: str, event_type: EventType, start_time: str, end_time: str):
+    def create(cls, name: str, event_type: EventType, start_time: str):
         match event_type:
             case EventType.RACE:
-                return Race(name, event_type, start_time, end_time)
+                return Race(name, event_type, start_time)
             case EventType.QP:
-                return Qualification(name, event_type, start_time, end_time)
+                return Qualification(name, event_type, start_time)
             case EventType.FP1:
-                return FreePractice(name, event_type, start_time, end_time)
+                return FreePractice(name, event_type, start_time)
             case EventType.FP2:
-                return FreePractice(name, event_type, start_time, end_time)
+                return FreePractice(name, event_type, start_time)
             case EventType.FP3:
-                return FreePractice(name, event_type, start_time, end_time)
+                return FreePractice(name, event_type, start_time)
