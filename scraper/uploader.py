@@ -3,6 +3,7 @@
 '''Module to convert csv data about Calendar and F1 Grand Prix in python object'''
 
 import json
+import os
 
 from config import Config
 from helper import get_mp_logger, path_combine
@@ -43,8 +44,13 @@ def upload(config: Config) -> Calendar:
 def get_version(source: str) -> int:
     '''Get version of local file'''
     log.info(f'Loading document {source}...')
-
+    
     default_version: int = 1
+    
+    if (not os.path.exists(source)):
+        log.error(f'File \'{source}\' doesn\'t exist')
+        return default_version
+    
     with open(source, 'r', encoding='utf-8') as document:
         data = json.load(document)
         try:

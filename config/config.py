@@ -1,5 +1,6 @@
 '''Config of Dexia'''
 import json
+import os
 
 from config.api import ApiConfig
 
@@ -21,8 +22,13 @@ class Config:
 
         Returns:
             Config: config based on content in `filepath`
-        """        
+        """
         config: Config = Config()
+        if (not os.path.exists(filepath)):
+            print(f'File \'{filepath}\' doesn\'t exist')
+            return config
+
+        
         with open(filepath, mode='r', encoding='utf-8') as document:
             json_data = json.load(document)
             config.debug = json_data.get('debug', False)
