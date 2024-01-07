@@ -37,7 +37,7 @@ def upload(config: Config) -> Calendar:
             log.error(e)
             return None
 
-    log.info(f'Loaded document into calendar')
+    log.info('Loaded document into calendar')
     return calendar
 
 def get_version(source: str) -> int:

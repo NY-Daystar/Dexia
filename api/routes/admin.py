@@ -18,9 +18,7 @@ def setup(app: FastAPI, config: Config):
     def _():
         document_path : str = get_last_document(config)
         version: int = get_version(document_path)
-        return dict(
-            {
+        return {
                 'status': 'OK',
                 'message': f'Version Document: {version}'
             }
-        )

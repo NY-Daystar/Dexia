@@ -11,17 +11,16 @@ class TestGrandPrix(unittest.TestCase):
         cls.calendar.add_grand_prix(GrandPrix(3, '3rd Grand Prix', '2020-05-19'))
         cls.calendar.set_year(2020)
         cls.calendar.set_version(1)
-        pass
     
     @classmethod
-    def tearDownClass(cls): ### run once after all test cases ###
-        pass
+    def tearDownClass(cls):
+        print('run once after all test cases')
     
-    def setUp(self): ### run before each test case ###
-        pass
+    def setUp(self):
+        print('run before each test case')
     
-    def tearDown(self): ### run after each test case ###
-        pass
+    def tearDown(self):
+        print('run after each test case')
     
     def test_get_grand_prix_with_good_id(self):
         # Arrange
