@@ -56,7 +56,8 @@ def scrap(config: Config) -> Calendar:
 
     # Display in log
     log.info(calendar)
-    [log.debug(gp) for gp in calendar.grand_prix]
+    for gp in calendar.grand_prix:
+        log.debug(gp)
 
     file: Path = path_combine(config.folder, constants.FILE)
     is_saved: bool = save_data(calendar, config.folder, file)

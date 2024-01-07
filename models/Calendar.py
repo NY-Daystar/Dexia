@@ -21,8 +21,9 @@ class Calendar:
         """ 
         self.year = year 
 
-        # Change year for every grand prix  
-        [gp.set_year(year) for gp in self.grand_prix]
+        # Change year for every grand prix
+        for gp in self.grand_prix:
+            gp.set_year(year)
 
     def set_version(self, version:int):
         """Setter to set version of json document
