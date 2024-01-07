@@ -52,6 +52,7 @@ def scrap(config: Config) -> Calendar:
     year: int = CalendarEntity().scrap_year(config.url)
     log.info("Year scrapped : %s", year)
     calendar.set_year(year)
+    calendar.set_version(constants.DOCUMENT_VERSION)
 
     # Display in log
     log.info(calendar)

@@ -4,6 +4,7 @@ from . import GrandPrix
 class Calendar:
     """F1 Calendar in specific year"""    
     year: int
+    version: int
     grand_prix: list[GrandPrix]
 
     def __init__(self):
@@ -14,9 +15,7 @@ class Calendar:
         self.grand_prix.append(g_prix)
 
     def set_year(self, year:int):
-        """change year of calendar and for its Grand Prix
-
-        
+        """Change year of calendar and for its Grand Prix
         Args:
             year (int): year to set for calendar and its Grand Prix
         """ 
@@ -24,6 +23,13 @@ class Calendar:
 
         # Change year for every grand prix  
         [gp.set_year(year) for gp in self.grand_prix]
+
+    def set_version(self, version:int):
+        """Setter to set version of json document
+        Args:
+            version (int): version of the document 
+        """ 
+        self.version = version 
 
     def to_dict(self)-> dict[str, str]:
         """Convert object to dict for json serialization
@@ -33,6 +39,7 @@ class Calendar:
         """        
         return {
             "year": self.year,
+            "version": self.version,
             "grand_prix": [gp.to_dict() for gp in self.grand_prix]
         }
 
