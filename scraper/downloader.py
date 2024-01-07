@@ -63,7 +63,6 @@ def scrap(config: Config) -> Calendar:
 
     log.info("data %s into file: %s", 'saved' if is_saved==True else 'not saved', file) 
 
-# TODO sauvegarder la version du document
 def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
     """'Copy calendar content into files
 

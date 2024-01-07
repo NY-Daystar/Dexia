@@ -26,10 +26,10 @@ Python scraper and api to fetch data about Formula 1 Calendar
 -   [OpenAPI](#openapi)
 -   [How it works](#how-it-works)
 -   [Get access to GSheet file](#generate-file-id)
--   [Debug Uploader corrupted or unreachable](#debug-uploader-corrupted-or-unreachable)
 -   [Unit tests](#tests)
 -   [Docker setup Dexia](#docker-setup-dexia)
     -   [Dexia API](#app-api)
+-   [Create Executable](#create-executable)
 -   [Formatting](#formatting)
 -   [Credits](#credits)
 
@@ -172,6 +172,22 @@ Create file `config.json`
 -   `folder`: folder where stored data scrapped
 -   `url`: url where scrapping data
 -   `api`: Define endpoint `host` and `port` for api listening
+
+## Create executable
+
+Module python used: pyinstaller
+
+1. Execute this command
+
+```bash
+pyinstaller dexia.py
+```
+
+2. Then configure the folder `./dist/dexia`
+
+    1. Add configuration file `config.json`
+
+3. Zip the folder `./dist/dexia`
 
 ## Formatting
 
