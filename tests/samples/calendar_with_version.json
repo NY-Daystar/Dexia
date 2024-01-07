@@ -1,0 +1,126 @@
+{
+	"year": 2024,
+	"version": 5,
+	"grand_prix": [
+		{
+			"index": 1,
+			"name": "Grand Prix de Bahreïn (Sakhir)",
+			"date": "2024-03-02"
+		},
+		{
+			"index": 2,
+			"name": "Grand Prix d’Arabie saoudite (Djeddah)",
+			"date": "2024-03-09"
+		},
+		{
+			"index": 3,
+			"name": "Grand Prix d’Australie (Melbourne)",
+			"date": "2024-03-24"
+		},
+		{
+			"index": 4,
+			"name": "Grand Prix du Japon (Suzuka)",
+			"date": "2024-04-07"
+		},
+		{
+			"index": 5,
+			"name": "Grand Prix de Chine (Shanghai)",
+			"date": "2024-04-21"
+		},
+		{
+			"index": 6,
+			"name": "Grand Prix de Miami (Miami)",
+			"date": "2024-05-05"
+		},
+		{
+			"index": 7,
+			"name": "Grand Prix d’Emilie-Romagne (Imola)",
+			"date": "2024-05-19"
+		},
+		{
+			"index": 8,
+			"name": "Grand Prix de Monaco (Monte-Carlo)",
+			"date": "2024-05-26"
+		},
+		{
+			"index": 9,
+			"name": "Grand Prix du Canada (Montréal)",
+			"date": "2024-06-09"
+		},
+		{
+			"index": 10,
+			"name": "Grand Prix d’Espagne (Barcelone)",
+			"date": "2024-06-23"
+		},
+		{
+			"index": 11,
+			"name": "Grand Prix d’Autriche (Spielberg)",
+			"date": "2024-06-30"
+		},
+		{
+			"index": 12,
+			"name": "Grand Prix d’Angleterre (Silverstone)",
+			"date": "2024-07-07"
+		},
+		{
+			"index": 13,
+			"name": "Grand Prix de Hongrie (Budapest)",
+			"date": "2024-07-21"
+		},
+		{
+			"index": 14,
+			"name": "Grand Prix de Belgique (Spa-Francorchamps)",
+			"date": "2024-07-28"
+		},
+		{
+			"index": 15,
+			"name": "Grand Prix des Pays-Bas (Zandvoort)",
+			"date": "2024-08-25"
+		},
+		{
+			"index": 16,
+			"name": "Grand Prix d’Italie (Monza)",
+			"date": "2024-09-01"
+		},
+		{
+			"index": 17,
+			"name": "Grand Prix d’Azerbaïdjan (Bakou)",
+			"date": "2024-09-15"
+		},
+		{
+			"index": 18,
+			"name": "Grand Prix de Singapour (Marina Bay)",
+			"date": "2024-09-22"
+		},
+		{
+			"index": 19,
+			"name": "Grand Prix des Etats-Unis (Austin)",
+			"date": "2024-10-20"
+		},
+		{
+			"index": 20,
+			"name": "Grand Prix du Mexique (Mexico)",
+			"date": "2024-10-27"
+		},
+		{
+			"index": 21,
+			"name": "Grand Prix du Brésil (Sao Paulo)",
+			"date": "2024-11-03"
+		},
+		{
+			"index": 22,
+			"name": "Grand Prix de Las Vegas (Las Vegas)",
+			"date": "2024-11-23"
+		},
+		{
+			"index": 23,
+			"name": "Grand Prix du Qatar (Losail)",
+			"date": "2024-12-01"
+		},
+		{
+			"index": 24,
+			"name": "Grand Prix d’Abou Dhabi (Yas Marina)",
+			"date": "2024-12-08"
+		}
+	]
+}

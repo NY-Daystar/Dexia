@@ -120,63 +120,19 @@ The application scrap french website who gets data about formula 1 calendar
 Serialize them in json files (default path: `./contents`)
 Then api use this json file to generate REST collections (`Calendar`, `Grand Prix`, `Events`, ...)
 
-## Debug Uploader corrupted or unreachable
-
-TODO mettre le contexte que l'uploader est utiliser pour charger les donnees du json en le deserialisant
-TODO ici on a la procédure pour le debugger
-
-This project download periodically a GSheet and stores it into `content` folder into `gpus.csv` file.
-
-If you want to restore an old old file
-
-1. Change the api config by disabling scraper
-
-```json
-{
-  ...
-  "scraper": false,
-  ...
-}
-```
-
-2. Restart service
-
-```bash
-$ python .
-```
-
-3. Restore old gpus.csv file in docker volume
-
-```bash
-$ cd ./content # your volume folder
-$ rm gpus.csv
-$ cp gpus_<VERSION>.csv gpus.csv
-```
-
 ## Tests
-
-TODO ecrire des tests unitaires
-To execute all unit tests
-
-```bash
-python -m unittest discover
-python -m unittest
-```
-
-To execute unit tests for module
-
-```bash
-python -m unittest helper
-```
 
 To execute production tests
 
 ```bash
-pytest --ignore=repositories --ignore=repositories_test --ignore=exe
+python -m unittest -v
 ```
 
-On github you need to modify settings to process ci workflow using:  
-https://github.com/marketplace/actions/webfactory-ssh-agent
+```bash
+pytest
+```
+
+To execute all of unit tests
 
 ## Docker Setup Dexia
 
@@ -186,42 +142,36 @@ https://github.com/marketplace/actions/webfactory-ssh-agent
 docker-compose build && docker-compose down && docker-compose up -d
 ```
 
-### App API
-
-TODO
-Create file `config.json`
-
-```json
-{
-  "debug": false,
-  "downloader": true,
-  "api": {
-    "host": "127.0.0.1",
-    "port": 8080
-  },
-  "file": {
-    "GSHEET_FILE_ID": <GSHEET_FILE_ID>,
-    "destination": "content/gpus.csv"
-  }
-}
-```
-
--   `debug`: bool to activate debug logs
--   `scraper`: bool to activate or the periodical download of GSHEET
--   `api`: Define endpoint `host` and `port` for api listening
--   To build `api` and update it
-
-```bash
-$ docker-compose build api
-```
-
--   Start service `api` && Stop service `api` && show logs service `api`
+-   Start API service then stop and show logs
 
 ```bash
 $ docker-compose up -d api
 $ docker-compose stop api
 $ docker-compose logs -f api
 ```
+
+### App API
+
+Create file `config.json`
+
+```json
+{
+	"debug": true,
+	"scraper": true,
+	"folder": "contents",
+	"url": "https://f1i.autojournal.fr/calendrier-f1-2023-dates-horaires-grands-prix",
+	"api": {
+		"host": "127.0.0.1",
+		"port": 8080
+	}
+}
+```
+
+-   `debug`: bool to activate debug logs
+-   `scraper`: bool to activate or not the periodical scrapping
+-   `folder`: folder where stored data scrapped
+-   `url`: url where scrapping data
+-   `api`: Define endpoint `host` and `port` for api listening
 
 ## Formatting
 
