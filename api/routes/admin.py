@@ -1,4 +1,4 @@
-'''Card routes'''
+'''Admin routes'''
 from fastapi import FastAPI
 
 from config import Config

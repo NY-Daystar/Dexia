@@ -6,6 +6,14 @@ TAGS = [
         'name': 'Admin',
         'description': 'Get admin stats',
     },
+    {
+        'name': 'Calendar',
+        'description': 'Get calendar information',
+    },
+    {
+        'name': 'GrandPrix',
+        'description': 'Get GrandPrix information',
+    },
 ]
 
 SERVERS = [

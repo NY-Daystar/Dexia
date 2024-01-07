@@ -3,10 +3,9 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from config import Config
-
 from api import constants
-from api.routes import admin
+from api.routes import admin, grandPrix
+from config import Config
 from helper import get_mp_logger
 
 log = get_mp_logger()
@@ -32,6 +31,7 @@ def start(config: Config):
 
     # Define all routes
     admin.setup(app, config)
+    grandPrix.setup(app, config)
 
     log.warn("Swagger API : http://%s:%s%s", config.api.host, config.api.port, app.docs_url)
 

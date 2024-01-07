@@ -1,8 +1,9 @@
 import re
 from datetime import datetime
 
-from . import Event 
+from . import Event
 from .enums import EventType, Month
+
 
 class GrandPrix():
     '''
@@ -28,11 +29,14 @@ class GrandPrix():
 
         Returns:
             datetime: formatted date
-        """        
-
+        """
         regexp: re.Pattern = re.compile(r'(\d+)(er|ème)?\s([\wû]+)')
         match: re.Match[str] = regexp.match(raw_date)
 
+        # si la date est déjà conforme
+        if(re.match(r"^\d{4}-\d{2}-\d{2}$", raw_date) != None):
+            return datetime.strptime(raw_date, "%Y-%m-%d")
+        
         day: int = int(match.group(1))
         month: int = int(Month[match.group(3).upper()])
         

@@ -31,6 +31,21 @@ class Calendar:
         """ 
         self.version = version 
 
+    def first(iterable, default=None):
+        for item in iterable:
+            return item
+        return default
+
+    def get_grand_prix(self, id:int) -> GrandPrix:
+        """Get specific grand prix from its id
+        Args:
+            version (int): id of the grand prix in the calendar
+        """ 
+        try:
+            return next(gp for gp in self.grand_prix if gp.index == id) 
+        except Exception as e:
+            return None
+
     def to_dict(self)-> dict[str, str]:
         """Convert object to dict for json serialization
 
