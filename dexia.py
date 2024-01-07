@@ -22,20 +22,16 @@ def main():
     log.debug("Project : %s - Version : %s", __project__, __version__)
     
     config: Config = Config.load('config.json')
-    print(config)
+
     # Process Web scraping, only if config accept to scrap
     log.info('Web Scraper: %s', 'active' if config.scraper else 'disable')
 
     # Launch Scraper if activated
     if config.scraper:
-        Process(target=scraper.start,
-                args=(config,))\
-            .start()
+        Process(target=scraper.start, args=(config,)).start()
 
     # Launch API
-    Process(target=api.start,
-            args=(config, ))\
-        .start()
+    Process(target=api.start, args=(config, )).start()
 
 
 if __name__ == '__main__':

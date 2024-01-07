@@ -1,4 +1,5 @@
-'''Models package'''
+__all__ = ['EventType','Month','Event','EventFactory','Calendar','FreePractice','GrandPrix', 'Qualification', 'Race']
+
 from .enums import EventType, Month
 from .Event import Event
 from .EventFactory import EventFactory

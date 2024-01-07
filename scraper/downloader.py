@@ -13,12 +13,11 @@ import schedule
 from config import Config
 from helper import get_mp_logger, is_new_file, path_combine
 from models import Calendar
+from scraper import constants
 
 from .entity import CalendarEntity
 
 log = get_mp_logger()
-
-FILE = 'calendar.json'
 
 def start(config: Config):
     '''Launch downloader to scrap data'''
@@ -58,11 +57,12 @@ def scrap(config: Config) -> Calendar:
     log.info(calendar)
     [log.debug(gp) for gp in calendar.grand_prix]
     
-    file: Path = path_combine(config.folder, FILE)
+    file: Path = path_combine(config.folder, constants.FILE)
     is_saved: bool = save_data(calendar, config.folder, file)
 
     log.info("data %s into file: %s", 'saved' if is_saved==True else 'not saved', file) 
 
+# TODO sauvegarder la version du document
 def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
     """'Copy calendar content into files
 

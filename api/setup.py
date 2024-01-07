@@ -1,20 +1,17 @@
 '''Start API'''
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import uvicorn
-
 from config import Config
-import api.constants as constants
-import api.routes as routes
+
+from api import constants
+from api.routes import admin
 from helper import get_mp_logger
 
 log = get_mp_logger()
 
-
 def start(config: Config):
-    '''Start the api'''
-    log.info('Launch API')
     app = FastAPI(
         redoc_url=None, openapi_tags=constants.TAGS,
         title='Dexia API',
@@ -34,11 +31,10 @@ def start(config: Config):
     )
 
     # Define all routes
-    routes.setup(app, config)
+    admin.setup(app, config)
 
     log.warn("Swagger API : http://%s:%s%s", config.api.host, config.api.port, app.docs_url)
 
     log_config = uvicorn.config.LOGGING_CONFIG
     log_config['formatters']['access']['fmt'] = '%(asctime)s - %(levelname)s - %(message)s'
-    uvicorn.run(app, host=config.api.host, port=int(config.api.port), log_config=log_config)
-    
+    uvicorn.run(app, host=config.api.host, port=config.api.port, log_config=log_config)

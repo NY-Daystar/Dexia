@@ -1,13 +1,14 @@
 '''Card routes'''
 from fastapi import FastAPI
 
+from config import Config
 from helper import get_mp_logger
-from scraper.uploader import get_version
+from scraper.uploader import get_last_document, get_version
 
 log = get_mp_logger()
 
 
-def setup(app: FastAPI):
+def setup(app: FastAPI, config: Config):
     '''Admin routes'''
     @app.get('/api/v1/version',
              tags=['Admin'],
@@ -15,7 +16,8 @@ def setup(app: FastAPI):
              description='Get the version document to know which version document we have',
              )
     def _():
-        version: str = get_version()
+        document_path : str = get_last_document(config)
+        version: int = get_version(document_path)
         return dict(
             {
                 'status': 'OK',

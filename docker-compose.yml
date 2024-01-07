@@ -3,11 +3,12 @@ services:
     api:
         build: .
         container_name: dexia
-        network_mode: "host"
         logging:
             driver: "json-file"
             options:
                 max-size: 100m
                 max-file: "3"
+        ports:
+            - 9001:8080
         volumes:
             - "$PWD/config.json:/home/app/config.json:ro"

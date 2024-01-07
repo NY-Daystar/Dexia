@@ -2,16 +2,16 @@
 
 '''Module to convert csv data about Calendar and F1 Grand Prix in python object'''
 
-import csv
-import re
+import json
 import sys
 
 import pandas
 import schedule
 
 from config import Config
-from helper import get_mp_logger
+from helper import get_mp_logger, path_combine
 from models import Calendar
+from scraper import constants
 
 log = get_mp_logger()
 
@@ -43,20 +43,23 @@ def upload(Config: str) -> Calendar:
     log.info(f'Loaded {len(calendar.grand_prix)} GPU')
     return calendar.grand_prix
 
+def get_last_document(config: Config) -> str:
+    '''
+    Get path of last .json document uploaded
+    '''
+    return path_combine(config.folder, constants.FILE)
 
-def get_version(source: str) -> str:
-    '''Get Version of local file'''
-    log.info(f'Uploading file {source}...')
+def get_version(source: str) -> int:
+    '''Get version of local file'''
+    log.info(f'Loading document {source}...')
 
-    version: str = "0"
+    default_version: int = 1
     with open(source, 'r', encoding='utf-8') as document:
-        rows = list(csv.reader(document))
-        version_str: str = rows[1][0]
+        data = json.load(document)
         try:
-            version = re.search(r"^Version:? (.*)$", version_str).group(1)
+            version = data.get('version', default_version)
         except AttributeError:
             pass
 
-    log.info(f'File {source} uploaded')
     log.info(f'Loaded document version : {version}')
     return version

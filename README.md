@@ -65,9 +65,16 @@ cd Dexia
 ```
 
 3. Setup virtual environment
+   On Linux
 
 ```bash
 virtualenv -p 3 .venv
+```
+
+On Windows
+
+```bash
+python -m venv .venv
 ```
 
 4. Activate virtual environment
@@ -181,6 +188,7 @@ docker-compose build && docker-compose down && docker-compose up -d
 
 ### App API
 
+TODO
 Create file `config.json`
 
 ```json
