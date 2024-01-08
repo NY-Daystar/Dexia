@@ -19,6 +19,7 @@ from .entity import CalendarEntity
 
 log = get_mp_logger()
 
+
 def start(config: Config):
     '''Launch downloader to scrap data'''
 
@@ -35,7 +36,6 @@ def start(config: Config):
             schedule.run_pending()
         except KeyboardInterrupt:
             sys.exit(0)
-
 
 
 def scrap(config: Config) -> Calendar:
@@ -62,9 +62,11 @@ def scrap(config: Config) -> Calendar:
     file: Path = path_combine(config.folder, constants.FILE)
     is_saved: bool = save_data(calendar, config.folder, file)
 
-    log.info("data %s into file: %s", 'saved' if is_saved is True else 'not saved', file) 
+    log.info("data %s into file: %s",
+             'saved' if is_saved is True else 'not saved', file)
 
-def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
+
+def save_data(calendar: Calendar, folder: Path, file: Path) -> bool:
     """'Copy calendar content into files
 
     Args:
@@ -74,7 +76,7 @@ def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
 
     Returns:
         bool: True if saved, otherwise False
-    """ 
+    """
     if calendar is None:
         log.warning('Calendar cannot be saved is None')
         return False
@@ -82,11 +84,11 @@ def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
     if not os.path.exists(folder):
         os.mkdir(folder)
 
-    # Write in backup file 
+    # Write in backup file
     dtime: str = datetime.now().strftime('%Y_%m_%d-%H_%M_%S')
     backup_file: Path = path_combine(folder, f'data_{dtime}.json')
     log.debug('Creating backup file: %s', backup_file)
-    with open( backup_file , "w", encoding='utf-8' ) as file_descriptor:
+    with open(backup_file , "w", encoding='utf-8') as file_descriptor:
         json.dump(calendar.to_dict(), file_descriptor, ensure_ascii=False, indent=4)
 
     # Write file if not exist or new changes
@@ -96,9 +98,11 @@ def save_data(calendar:Calendar, folder: Path, file: Path) -> bool:
 
     # Detect changes
     if is_new_file(file, backup_file):
-        log.info("New content in backup file (%s), copying into (%s)", backup_file, file )
+        log.info("New content in backup file (%s),\
+            copying into (%s)", backup_file, file)
         shutil.copy(backup_file, file)
     else:
-        log.warning("Content not changed, No copy of backup file (%s) into file (%s)", backup_file, file)
+        log.warning("Content not changed, No copy of backup\
+            file (%s) into file (%s)", backup_file, file)
 
     return True

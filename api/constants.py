@@ -1,6 +1,6 @@
 '''Constants for api'''
 
-################################ SWAGGER DATA #######################################
+# SWAGGER DATA #
 TAGS = [
     {
         'name': 'Admin',

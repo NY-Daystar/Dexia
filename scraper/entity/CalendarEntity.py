@@ -26,7 +26,7 @@ class CalendarEntity(Entity):
         """Scrap f1 calendar from url
 
         Args:
-            url (str): url to scrap 
+            url (str): url to scrap
 
         Raises:
             BeautifulSoupException: _description_
@@ -51,7 +51,8 @@ class CalendarEntity(Entity):
         table: Tag = soup.find("table", class_={"calendar"})
 
         if table is None:
-            raise BeautifulSoupException(url, 'Table tag with class \'calendar\' is not found')
+            raise BeautifulSoupException(url, 'Table tag\
+                                         with class \'calendar\' is not found')
 
         result_set: ResultSet[str] = table.find_all('tr')
 
@@ -85,7 +86,7 @@ class CalendarEntity(Entity):
         """Scrap year of F1 calendar
 
         Args:
-            url (str): url to scrap 
+            url (str): url to scrap
 
         Returns:
             int: year of the calendar

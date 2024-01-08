@@ -1,5 +1,6 @@
 from . import Event
 
+
 class Race(Event):
     '''
     Race event

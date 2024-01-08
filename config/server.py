@@ -15,4 +15,5 @@ class Server:
         self.token = token
 
     def __str__(self):
-        return f"Git server - {self.name} - {self.type} - url: {self.url} - token: {self.token}"
+        return f"Git server - {self.name} - {self.type}\
+            - url: {self.url} - token: {self.token}"

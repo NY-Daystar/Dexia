@@ -7,6 +7,7 @@ from . import downloader
 
 log = get_mp_logger()
 
+
 def start(config: Config):
     """Launch scrap to download data
 

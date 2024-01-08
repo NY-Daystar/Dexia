@@ -14,7 +14,7 @@ __version__: str = 'v1.0.0'
 
 def main():
     """
-    Entrypoint of the program 
+    Entrypoint of the program
     - Load configuration file (config.json)
     - Setup Logger
     - Launch multiprocessing (scraper + api)

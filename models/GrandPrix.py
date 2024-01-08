@@ -34,7 +34,7 @@ class GrandPrix():
         match: re.Match[str] = regexp.match(raw_date)
 
         # si la date est déjà conforme
-        if(re.match(r"^\d{4}-\d{2}-\d{2}$", raw_date) is not None):
+        if re.match(r"^\d{4}-\d{2}-\d{2}$", raw_date) is not None:
             return datetime.strptime(raw_date, "%Y-%m-%d")
 
         day: int = int(match.group(1))
@@ -47,18 +47,18 @@ class GrandPrix():
 
         Args:
             event (Event): event to add
-        """        
+        """
         self.events.append(event)
 
     def set_year(self, year: int) -> None:
         self.event.set_year(year)
 
-    def to_dict(self)-> dict[str,str]:
+    def to_dict(self) -> dict[str, str]:
         """Convert object to dict for json serialization
 
         Returns:
             dict[str,str]: object in dict
-        """        
+        """
         return {
             "index": self.index,
             "name": self.name,

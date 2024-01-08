@@ -24,11 +24,10 @@ class Config:
             Config: config based on content in `filepath`
         """
         config: Config = Config()
-        if (not os.path.exists(filepath)):
+        if not os.path.exists(filepath):
             print(f'File \'{filepath}\' doesn\'t exist')
             return config
 
-        
         with open(filepath, mode='r', encoding='utf-8') as document:
             json_data = json.load(document)
             config.debug = json_data.get('debug', False)
@@ -39,5 +38,6 @@ class Config:
         return config
 
     def __str__(self):
-        return f'Config: debug: {self.debug} - scraper: {self.scraper} '\
-            f'- folder: {self.folder} - url: {self.url} - Api: {self.api.host}:{self.api.port}'
+        return f'Config: debug: {self.debug} - scraper: {self.scraper}\
+            - folder: {self.folder} - url: {self.url}\
+            - Api: {self.api.host}:{self.api.port}'

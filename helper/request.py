@@ -4,17 +4,18 @@ from requests import Response, get
 
 
 def request(url: str) -> Response:
-    """Send HTTP type GET request with appropriate headers 
+    """Send HTTP type GET request with appropriate headers
 
     Args:
         url (str): url to request in HTTP GET
 
     Returns:
         Response: HTTP Response
-    """ 
+    """
 
     headers: dict = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0)\
+            Gecko/20100101 Firefox/117.0',
     }
 
     cookies: dict = {
@@ -25,9 +26,10 @@ def request(url: str) -> Response:
         '_gat_autojournal': '1',
     }
 
-    response: Response =  get(url, headers=headers, cookies=cookies)
+    response: Response = get(url, headers=headers, cookies=cookies)
 
     if not response.ok:
-        raise HTTPError(url, response.status_code, response.content, response.headers, response.content)
+        raise HTTPError(url, response.status_code, response.content,
+                        response.headers, response.content)
 
     return response

@@ -13,8 +13,8 @@ def setup(app: FastAPI, config: Config):
     @app.get('/api/v1/version',
              tags=['Admin'],
              summary='Get version document',
-             description='Get the version document to know which version document we have',
-             )
+             description='Get the version document to know\
+                which version document we have')
     def _():
         document_path : str = get_last_document(config)
         version: int = get_version(document_path)

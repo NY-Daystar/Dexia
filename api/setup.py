@@ -10,6 +10,7 @@ from helper import get_mp_logger
 
 log = get_mp_logger()
 
+
 def start(config: Config):
     app = FastAPI(
         redoc_url=None, openapi_tags=constants.TAGS,
@@ -33,8 +34,10 @@ def start(config: Config):
     admin.setup(app, config)
     grandPrix.setup(app, config)
 
-    log.warning("Swagger API : http://%s:%s%s", config.api.host, config.api.port, app.docs_url)
+    log.warning("Swagger API : http://%s:%s%s",
+                config.api.host, config.api.port, app.docs_url)
 
     log_config = uvicorn.config.LOGGING_CONFIG
-    log_config['formatters']['access']['fmt'] = '%(asctime)s - %(levelname)s - %(message)s'
+    log_config['formatters']['access']['fmt'] = \
+        '%(asctime)s -%(levelname)s - %(message)s'
     uvicorn.run(app, host=config.api.host, port=config.api.port, log_config=log_config)

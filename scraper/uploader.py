@@ -12,6 +12,7 @@ from scraper import constants
 
 log = get_mp_logger()
 
+
 def get_last_document(config: Config) -> str:
     '''
     Get path of last .json document uploaded
@@ -19,6 +20,7 @@ def get_last_document(config: Config) -> str:
     source: str = path_combine(config.folder, constants.FILE)
     log.debug(f'Loading document {source}...')
     return source
+
 
 def upload(config: Config) -> Calendar:
     '''Upload Calendar from local file to create data for api'''
@@ -41,16 +43,17 @@ def upload(config: Config) -> Calendar:
     log.info('Loaded document into calendar')
     return calendar
 
+
 def get_version(source: str) -> int:
     '''Get version of local file'''
     log.info(f'Loading document {source}...')
-    
+
     default_version: int = 1
-    
-    if (not os.path.exists(source)):
+
+    if not os.path.exists(source):
         log.error(f'File \'{source}\' doesn\'t exist')
         return default_version
-    
+
     with open(source, 'r', encoding='utf-8') as document:
         data = json.load(document)
         try:
